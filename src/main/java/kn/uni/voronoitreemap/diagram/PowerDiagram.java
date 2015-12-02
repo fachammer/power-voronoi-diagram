@@ -81,6 +81,10 @@ public class PowerDiagram {
 		this.sites = sites;
 		hull = null;
 	}
+	
+	public OpenList getSites() {
+		return sites;
+	}
 
 	public void setClipPoly(PolygonSimple polygon) {
 		clipPoly = polygon;
