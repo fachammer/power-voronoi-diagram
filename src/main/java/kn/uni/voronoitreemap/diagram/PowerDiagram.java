@@ -351,7 +351,7 @@ public class PowerDiagram {
 		// note that the cell can also be empty, in this case there is no polygon for the corresponding site.
 		for (int i=0;i<sites.size;i++){
 			Site site=sites.array[i];
-			PolygonSimple polygon=site.getPolygon();
+			site.getPolygon();
 		}
 	}
 

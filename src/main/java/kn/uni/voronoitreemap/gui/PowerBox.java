@@ -43,6 +43,10 @@ import kn.uni.voronoitreemap.j2d.Site;
  *
  */
 public class PowerBox extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7636649818676390241L;
 	ArrayList<JSite> points=new ArrayList<JSite>();
 	OpenList sites=new OpenList();
 	PolygonSimple clipPoly=new PolygonSimple();
@@ -56,7 +60,7 @@ public class PowerBox extends JFrame {
 		clipPoly.add(50,800);
 		clipPoly.add(800,800);
 		clipPoly.add(800,50);
-		this.powerBox=this;
+		PowerBox.powerBox=this;
 		getContentPane().setLayout(new BorderLayout());
 		getContentPane().setBackground(Color.BLACK);
 		getContentPane().add(panel);

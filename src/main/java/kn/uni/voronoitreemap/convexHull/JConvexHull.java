@@ -320,10 +320,4 @@ public class JConvexHull {
 	public JFace getFacet(int i) {
 		return facets.get(i);
 	}
-	private boolean isPermutate() {
-		return permutate;
-	}
-	private void setPermutate(boolean permutate) {
-		this.permutate = permutate;
-	}
 }

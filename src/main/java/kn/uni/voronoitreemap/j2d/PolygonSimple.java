@@ -112,7 +112,7 @@ public class PolygonSimple implements Shape, Cloneable, Iterable<Point2D>{
 	/**
 	 * Replaces the pointers of the coordinate arrays to show to the given coordinate arrays.
 	 */
-	public void PolygonSimple(PolygonSimple simple) {
+	public PolygonSimple(PolygonSimple simple) {
 		bounds = null;
 		centroid = null;
 		area = -1;
@@ -490,23 +490,6 @@ public class PolygonSimple implements Shape, Cloneable, Iterable<Point2D>{
 		return null;
 	}
 
-	/**
-	 * Debugging only
-	 * @param poly
-	 */
-	private Point2D containsPoly(PolygonSimple poly) {
-		boolean inside=true;
-			for(Point2D p:poly){
-				if(!this.contains(p)){
-					System.out.println(p);
-					inside=false;
-					return p;
-					
-				}
-			}
-			return null;
-	}
-
 	private cVertexList getVertexList() {
 		cVertexList list = new cVertexList();
 		for (int i = length - 1; i >= 0; i--) {
@@ -727,52 +710,6 @@ public class PolygonSimple implements Shape, Cloneable, Iterable<Point2D>{
 	}
 
 	/**
-	 * We get a vector which describes where the point should be relative to the
-	 * center. We change the length of the vector so that the point fits in the
-	 * polygon. alpha is the percentage of the point when considering the line
-	 * to the border.
-	 * 
-	 * @return Point which is contained by this polygon and has same direction
-	 *         as the given vector point
-	 */
-	final private Point2D getRelativePosition(Point2D vector, double alphaLine) {
-
-		double dx = vector.getX();
-		double dy = vector.getY();
-
-		getCentroid();
-		double centroidX = centroid.getX();
-		double centroidY = centroid.getY();
-
-		double endPointX = centroidX + dx;
-		double endPointY = centroidY + dy;
-		Point2D endPoint = new Point2D(endPointX, endPointY);
-
-		Point2D p1 = null;
-		Point2D p2 = new Point2D(x[0], y[0]);
-		Point2D result = null;
-		for (int i = 1; i <= length; i++) {
-
-			p1 = p2;
-			p2 = new Point2D(x[i], y[i]);
-			Point2D intersection = getIntersectionOfSegmentAndLine(p1, p2,
-					centroid, endPoint);
-			if (intersection != null) {
-
-				double deltaX = intersection.getX() - centroidX;
-				double deltaY = intersection.getY() - centroidY;
-				double e = intersection.distance(centroid);
-				double nX = centroidX + deltaX * alphaLine;
-				double nY = centroidY + deltaY * alphaLine;
-				return new Point2D(nX, nY);
-			}
-		}
-		System.out.println("Problem, relative Placement did not go right.");
-		return null;
-
-	}
-
-	/**
 	 * Returns a random point in the polygon.
 	 * @return
 	 */
@@ -837,7 +774,6 @@ public class PolygonSimple implements Shape, Cloneable, Iterable<Point2D>{
 		double y1 = 0;
 		double y2 = 0;
 
-		double x3 = 0;
 		double x4 = 0;
 		double y3 = 0;
 		double y4 = 0;
@@ -858,10 +794,10 @@ public class PolygonSimple implements Shape, Cloneable, Iterable<Point2D>{
 		}
 
 		if (p3.getX() < p4.getX()) {
-			x3 = p3.getX();
+			p3.getX();
 			x4 = p4.getX();
 		} else {
-			x3 = p4.getX();
+			p4.getX();
 			x4 = p3.getX();
 		}
 		if (p3.getY() < p4.getY()) {
@@ -913,43 +849,6 @@ public class PolygonSimple implements Shape, Cloneable, Iterable<Point2D>{
 
 	}
 
-	/**
-	 * Return the intersection of the segment given bei p1 and p2 and the line
-	 * given by p3 and p4. intersection:
-	 * http://paulbourke.net/geometry/lineline2d/
-	 * 
-	 * @param p1
-	 * @param p2
-	 * @param p3
-	 * @param p4
-	 * @return
-	 */
-	private static Point2D getIntersectionOfSegmentAndLine(Point2D p1,
-			Point2D p2, Point2D p3, Point2D p4) {
-		
-		double denominator = (p4.getY() - p3.getY()) * (p2.getX() - p1.getX())
-				- (p4.getX() - p3.getX()) * (p2.getY() - p1.getY());
-		if (denominator == 0) {
-			// return null;
-			throw new RuntimeException("Lines are parallel");
-		}
-		double ua = (p4.getX() - p3.getX()) * (p1.getY() - p3.getY())
-				- (p4.getY() - p3.getY()) * (p1.getX() - p3.getX());
-		double ub = (p2.getX() - p1.getX()) * (p1.getY() - p3.getY())
-				- (p2.getY() - p1.getY()) * (p1.getX() - p3.getX());
-		ua = ua / denominator;
-		ub = ub / denominator;
-
-		if ((ua >= 0 && ua <= 1) && ub >= 1) {
-			return new Point2D(p1.getX() + ua * (p2.getX() - p1.getX()),
-					p1.getY() + ua * (p2.getY() - p1.getY()));
-		} else {
-			// no intersection of the two segments
-			return null;
-		}
-
-	}
-	
 	/**
 	 * Array with x-values of the polygon points.
 	 * @return 

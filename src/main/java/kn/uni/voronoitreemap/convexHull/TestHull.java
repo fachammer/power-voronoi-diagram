@@ -12,7 +12,6 @@
  ******************************************************************************/
 package kn.uni.voronoitreemap.convexHull;
 
-import java.util.List;
 import java.util.Random;
 
 
@@ -116,7 +115,7 @@ public class TestHull{
 		}
 		
 			
-		List<JFace> erg = hull.compute();
+		hull.compute();
 		long endTime=System.currentTimeMillis();
 		
 		long delta = endTime-startTime;

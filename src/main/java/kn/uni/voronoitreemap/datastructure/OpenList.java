@@ -37,7 +37,6 @@ public class OpenList implements Iterable<Site>{
 	public OpenList(){
 		this(10);
 	}
-	@SuppressWarnings("unchecked")
 	public OpenList(int capacity){
 		
 		array=new Site[capacity];

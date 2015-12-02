@@ -13,6 +13,10 @@
 package kn.uni.voronoitreemap.convexHull;
 
 public class NotEnoughPointsException extends RuntimeException {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5851146020202395570L;
 	public NotEnoughPointsException(String str) {
 		super(str);
 	}

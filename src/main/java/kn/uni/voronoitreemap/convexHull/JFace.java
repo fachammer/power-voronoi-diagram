@@ -16,7 +16,6 @@ package kn.uni.voronoitreemap.convexHull;
 
 import kn.uni.voronoitreemap.j2d.Point2D;
 import kn.uni.voronoitreemap.j3d.Plane3D;
-import kn.uni.voronoitreemap.j3d.Point3d;
 
 /**
  * Facet class connected over double-connected edge list. Contains incident vertices and edges.

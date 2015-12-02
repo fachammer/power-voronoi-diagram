@@ -13,19 +13,14 @@
 package kn.uni.voronoitreemap.gui;
 
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.RenderingHints;
-import java.awt.Stroke;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.JComponent;
 
@@ -42,12 +37,12 @@ import kn.uni.voronoitreemap.j2d.PolygonSimple;
  */
 
 public class JPolygon extends JComponent implements VoroCellObject {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7040594432915840272L;
 	String text;
-	private Font textFont;
 	PolygonSimple polygon;
-	private boolean mouseIn=false;
-	private boolean isFinal;
-	private Integer id;
 	private boolean isLast=false;
 	private Color fillColor=new Color(255,255,255,0);
 	private int height=0;
@@ -59,7 +54,6 @@ public class JPolygon extends JComponent implements VoroCellObject {
 		this.text=title;
 	}
 	public JPolygon(Integer id){
-		this.id=id;
 		polygon=null;
 		this.setOpaque(false);
 //		initListeners();
@@ -72,7 +66,6 @@ public class JPolygon extends JComponent implements VoroCellObject {
 	
 public void calculateFittingFont(){
 	if (polygon==null || text==null) return;
-		textFont=null;
 		new Thread(){
 		public void run(){
 			Font font = new Font("Serif", Font.BOLD, 5);
@@ -100,14 +93,13 @@ public void calculateFittingFont(){
         }while(polygon.contains(p1)&& polygon.contains(p2) && polygon.contains(p3) && polygon.contains(p4));
 		if (fontSize-4>0){
 			if (makeFontSmaller){
-				textFont=new Font("Serif", Font.BOLD, (int)((fontSize)*0.6));
+				new Font("Serif", Font.BOLD, (int)((fontSize)*0.6));
 			}
 			else {
 				if (text.length()<=4 && height==3){
-					//small words gett smaller so that they do not look too important
-					textFont=new Font("Serif", Font.BOLD, (int)(fontSize*0.6));
+					new Font("Serif", Font.BOLD, (int)(fontSize*0.6));
 				}else{
-				textFont=new Font("Serif", Font.BOLD, fontSize-4);
+				new Font("Serif", Font.BOLD, fontSize-4);
 				}
 				}
 			
@@ -121,38 +113,6 @@ public void calculateFittingFont(){
 	public PolygonSimple getPolygon(){
 		return polygon;
 	}
-	private void initListeners() {
-		this.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				doMouseReleased(e);
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				doMousePressed(e);
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				doMouseExited(e);
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				doMouseEntered(e);
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				doMouseClicked(e);
-			}
-		});
-	}
-	
-	
 	protected void doMousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
 		System.out.println(e);
@@ -168,13 +128,10 @@ public void calculateFittingFont(){
 
 	protected void doMouseEntered(MouseEvent e) {
 		System.out.println(e);
-		mouseIn=true;
 		repaint();
 	}
 
 	protected void doMouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub,
-		mouseIn=false;
 		repaint();
 	}
 	
@@ -295,15 +252,12 @@ public void calculateFittingFont(){
 	@Override
 	public void doFinalWork() {
 		calculateFittingFont();
-		isFinal=true;
-//		repaint();
 	}
 
 	
 	public void setVoroPolygon(PolygonSimple p, int height) {
 		p=(PolygonSimple)p.clone();
 		this.height=height;
-		isFinal=false;
 		Rectangle bounds = p.getBounds();
 //		if (height==2)
 //		p.shrinkForBorder(0.98);
