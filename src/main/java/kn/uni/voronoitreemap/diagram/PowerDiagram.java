@@ -119,7 +119,8 @@ public class PowerDiagram {
 	 * @see diagram.iPowerDiagram#computeDiagram()
 	 */
 	public void computeDiagram() {
-
+		assert clipPoly != null;
+				
 		if (sites.size > 0) {
 			sites.permutate();
 
