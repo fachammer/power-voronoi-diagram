@@ -242,19 +242,7 @@ public class PowerDiagram {
 
 						}
 						site.nonClippedPolyon = poly;
-
-						if (!site.isDummy) {
-//							try {
-								site.setPolygon(clipPoly.convexClip(poly));
-
-//							} catch (Exception ex) {
-//
-//								ex.printStackTrace();
-//								
-//								// TODO fallback for nonconvex clipping
-//							}
-						}
-
+						site.setPolygon(clipPoly.convexClip(poly));
 					}
 				}
 			}
