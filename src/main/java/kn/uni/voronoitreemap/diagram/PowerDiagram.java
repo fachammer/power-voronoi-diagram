@@ -122,7 +122,7 @@ public class PowerDiagram {
 		assert clipPoly != null;
 				
 		if (sites.size > 0) {
-			sites.permutate();
+			//sites.permutate();
 
 			hull = new JConvexHull();
 			Site[] array = sites.array;
@@ -130,8 +130,6 @@ public class PowerDiagram {
 			for (int z = 0; z < size; z++) {
 				Site s = array[z];
 				if (Double.isNaN(s.getWeight())){
-			
-//					s.setWeight(0.001);
 					throw new RuntimeException(
 							"Weight of a Site may not be NaN.");
 				}

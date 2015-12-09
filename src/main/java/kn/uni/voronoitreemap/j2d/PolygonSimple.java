@@ -341,8 +341,8 @@ public class PolygonSimple implements Shape, Cloneable, Iterable<Point2D>{
 		if (bounds == null) {
 			double xmin = Double.MAX_VALUE;
 			double ymin = Double.MAX_VALUE;
-			double xmax = Double.MIN_VALUE;
-			double ymax = Double.MIN_VALUE;
+			double xmax = -Double.MAX_VALUE;
+			double ymax = -Double.MAX_VALUE;
 
 			for (int i = 0; i < length; i++) {
 				double x = this.x[i];
