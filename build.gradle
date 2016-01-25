@@ -3,3 +3,8 @@ apply plugin: 'java'
 sourceSets {
   main
 }
+
+dependencies {
+	ext.apacheCommonsLangVersion = '3.4'
+	compile "org.apache.commons:commons-lang3:3.4"
+}

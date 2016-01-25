@@ -22,6 +22,11 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Random;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import kn.uni.voronoitreemap.convexClip.ConvexClip;
 import kn.uni.voronoitreemap.convexClip.cVertex;
 import kn.uni.voronoitreemap.convexClip.cVertexList;
@@ -920,5 +925,40 @@ public class PolygonSimple implements Shape, Cloneable, Iterable<Point2D>{
 		return x;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if(!(obj instanceof PolygonSimple))
+			return false;
+		
+		if(obj == this)
+			return true;
+		
+		PolygonSimple rhs = (PolygonSimple) obj;
+		
+		return new EqualsBuilder()
+				.append(x, rhs.x)
+				.append(y, rhs.y)
+				.append(oldPolygon, rhs.oldPolygon)
+				.isEquals();
+	}
 	
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder()
+				.append(oldPolygon)
+				.append(x)
+				.append(y)
+				.toHashCode();
+	}
+	
+	@Override
+	public String toString() {
+		java.awt.geom.Point2D.Double[] points = new java.awt.geom.Point2D.Double[length];
+		for(int i = 0; i < length; i++) {
+			points[i] = new java.awt.geom.Point2D.Double(x[i], y[i]);
+		}
+		return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
+				.append("points", points)
+				.build();
+	}
 }
