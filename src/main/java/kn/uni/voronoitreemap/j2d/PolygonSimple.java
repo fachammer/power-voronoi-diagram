@@ -22,7 +22,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Random;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -904,8 +903,6 @@ public class PolygonSimple implements Shape, Cloneable, Iterable<Point2D>{
 			
 		};
 	}
-	
-	
 
 	public int[] getXpointsClosed(){
 		return getPointsClosed(x);
@@ -923,6 +920,16 @@ public class PolygonSimple implements Shape, Cloneable, Iterable<Point2D>{
 		return x;
 	}
 
+	private static boolean shiftEquals(PolygonSimple a, PolygonSimple b, int shift) {
+		for(int i = 0; i < a.length; i++) {
+			int bIndex = (i + shift) % a.length;
+			if(a.x[i] != b.x[bIndex] || a.y[i] != b.y[bIndex])
+				return false;
+		}
+		
+		return true;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if(!(obj instanceof PolygonSimple))
@@ -933,17 +940,43 @@ public class PolygonSimple implements Shape, Cloneable, Iterable<Point2D>{
 		
 		PolygonSimple rhs = (PolygonSimple) obj;
 		
-		return new EqualsBuilder()
-				.append(x, rhs.x)
-				.append(y, rhs.y)
-				.isEquals();
+		if(length != rhs.length)
+			return false;
+		
+		for(int shift = 0; shift < length; shift++) {
+			if(shiftEquals(this, rhs, shift))
+				return true;
+		}
+		
+		return false;
 	}
 	
 	@Override
 	public int hashCode() {
+		
+		int minIndex = 0;
+		double minXElement = Double.POSITIVE_INFINITY;
+		double minYElement = Double.POSITIVE_INFINITY;
+		for(int i = 0; i < length; i++){
+			if(x[i] <= minXElement && y[i] <= minYElement){
+				minIndex = i;
+				minXElement = x[i];
+				minYElement = y[i];
+			}
+		}
+		
+		double[] normalizedX = new double[length];
+		double[] normalizedY = new double[length];
+		
+		for(int i = 0; i < length; i++){
+			int shiftedIndex = (i + minIndex) % length;
+			normalizedX[i] = x[shiftedIndex];
+			normalizedY[i] = y[shiftedIndex];
+		}
+		
 		return new HashCodeBuilder()
-				.append(x)
-				.append(y)
+				.append(normalizedX)
+				.append(normalizedY)
 				.toHashCode();
 	}
 	
