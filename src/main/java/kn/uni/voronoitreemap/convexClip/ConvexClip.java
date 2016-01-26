@@ -159,7 +159,7 @@ public class ConvexClip {
 	 * @return returns whether p2 is convex and counterclockwise oriented
 	 */
 	private static boolean isConvex(cVertexList p2) {
-		if(p2.n < 3){
+		if(p2.n < 2){
 			return false;
 		}
 		cVertex curr = p2.head;

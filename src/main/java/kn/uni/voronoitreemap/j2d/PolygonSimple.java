@@ -460,8 +460,6 @@ public class PolygonSimple implements Shape, Cloneable, Iterable<Point2D>{
 		cVertexList list1 = this.getVertexList();
 		cVertexList list2 = poly.getVertexList();
 		ConvexClip clipper = new ConvexClip();
-//		list1.PrintVertices();
-//		list2.PrintVertices();
 		clipper.Start(list1, list2);
 		PolygonSimple res = new PolygonSimple();
 		if (clipper.inters != null && clipper.inters.n > 0) {
@@ -938,14 +936,12 @@ public class PolygonSimple implements Shape, Cloneable, Iterable<Point2D>{
 		return new EqualsBuilder()
 				.append(x, rhs.x)
 				.append(y, rhs.y)
-				.append(oldPolygon, rhs.oldPolygon)
 				.isEquals();
 	}
 	
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder()
-				.append(oldPolygon)
 				.append(x)
 				.append(y)
 				.toHashCode();

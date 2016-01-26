@@ -11,6 +11,9 @@
  * Arlind Nocaj, Ulrik Brandes, "Computing Voronoi Treemaps: Faster, Simpler, and Resolution-independent", Computer Graphics Forum, vol. 31, no. 3, June 2012, pp. 855-864
  ******************************************************************************/
 package kn.uni.voronoitreemap.convexHull;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import kn.uni.voronoitreemap.j3d.Point3d;
 
 /**
@@ -48,15 +51,30 @@ public class JVertex {
 	public void setIndex(int index) {
 		this.index = index;
 	}
-	public boolean equals(Object o) {
-		if(!(o instanceof JVertex))
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(!(obj instanceof JVertex))
 			return false;
-		else {
-			JVertex obj = (JVertex) o;
-			if(obj.x == x && obj.y == y && obj.z == z)
-				return true;
-			else return false;
-		}
+		
+		if(this == obj)
+			return true;
+		
+		JVertex rhs = (JVertex) obj;
+		return new EqualsBuilder()
+				.append(x, rhs.x)
+				.append(y, rhs.y)
+				.append(z, rhs.z)
+				.isEquals();
+	}
+	
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder()
+				.append(x)
+				.append(y)
+				.append(z)
+				.toHashCode();
 	}
 	/**
 	 * 

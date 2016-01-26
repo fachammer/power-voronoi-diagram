@@ -15,6 +15,9 @@ package kn.uni.voronoitreemap.j2d;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 /**
  * Extended Version of a site, which has relative Positions
  * @author Arlind Nocaj
@@ -110,5 +113,30 @@ public class Site extends ASite {
 	
 	public double getLastIncrease() {
 		return lastIncrease;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(!(obj instanceof Site))
+			return false;
+		
+		if(this == obj)
+			return true;
+		
+		Site rhs = (Site) obj;
+		return new EqualsBuilder()
+				.appendSuper(super.equals(obj))
+				.append(isDummy, rhs.isDummy)
+				.append(data, rhs.data)
+				.isEquals();
+	}
+	
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder()
+				.appendSuper(super.hashCode())
+				.append(isDummy)
+				.append(data)
+				.toHashCode();
 	}
 }
